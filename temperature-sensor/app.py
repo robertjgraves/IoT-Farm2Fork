@@ -13,8 +13,8 @@ client_name = id + 'temperature_sensor_client'
 client_telementry = id + '/telemetry'
 
 mqtt_client = mqtt.Client(client_name)
-#mqtt_client.connect('test.mosquitto.org')
-mqtt_client.connect('192.168.1.107')
+mqtt_client.connect('test.mosquitto.org')
+#mqtt_client.connect('192.168.1.107')
 
 mqtt_client.loop_start()
 print("MQTT Connected")
