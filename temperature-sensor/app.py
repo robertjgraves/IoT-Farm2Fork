@@ -27,6 +27,7 @@ print("MQTT Connected")
 def CtoF(celsius):
     return celsius * (9.0 / 5.0) + 32.0
 
+# https://www.geeksforgeeks.org/clear-screen-python/
 def clear():
 
     # for windows
