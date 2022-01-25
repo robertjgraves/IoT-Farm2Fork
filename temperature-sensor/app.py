@@ -60,7 +60,7 @@ if __name__ == '__main__':
             
             mqtt_client.publish(client_telementry, telementry)
             
-            time.sleep(2)
+            time.sleep(10)
     
     except KeyboardInterrupt:
         print("")
