@@ -22,6 +22,19 @@ mqtt_client.connect(mqtt_server)
 mqtt_client.loop_start()
 print("MQTT Connected")
 
+# https://www.geeksforgeeks.org/clear-screen-python/
+def clear():
+
+    # for windows
+    if name == 'nt':
+        _ = system('cls')
+    
+    # for mac and linux (here, os.name is 'posix')
+    else:
+        _ = system('clear')
+
+
+
 while True:
     soil_moisture = adc.read(0)
     print("Soil moisture: ", soil_moisture)
