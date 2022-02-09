@@ -4,11 +4,10 @@ import json
 from grove.adc import ADC
 from os import system, name
 
-print("Soil Moisture Sensor")
-
 adc = ADC()
 
 mqtt_server = '192.168.1.102'               # Ignition server (Raspberry Pi 4)
+soil_sensor_analog_port = 0
 
 id = 'pi-zero-2w'
 
@@ -33,10 +32,24 @@ def clear():
     else:
         _ = system('clear')
 
+if __name__ == '__main__':
+    try:
+        while True:
+            clear()
+            print("Soil Moisture Sensor")
+            soil_moisture = adc.read(soil_sensor_analog_port)
+            
+            data = {}
+            data["soil moisture"] = soil_moisture
 
+            telemetry = json.dumps(data)
 
-while True:
-    soil_moisture = adc.read(0)
-    print("Soil moisture: ", soil_moisture)
+            mqtt_client.publish(client_telemetry, telemetry)
 
-    time.sleep(5)
+            print("Soil moisture: ", soil_moisture)
+
+            time.sleep(5)
+
+    except KeyboardInterrupt:
+        print("")
+        print("Stopped by user")
