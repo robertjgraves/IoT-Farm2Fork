@@ -3,8 +3,11 @@ import paho.mqtt.client as mqtt
 import json
 from grove.adc import ADC
 from os import system, name
+from grove.grove_relay import GroveRelay
+
 
 adc = ADC()
+relay = GroveRelay(16)
 
 mqtt_server = '192.168.1.102'               # Ignition server (Raspberry Pi 4)
 soil_sensor_analog_port = 0
@@ -21,6 +24,19 @@ mqtt_client.connect(mqtt_server)
 mqtt_client.loop_start()
 print("MQTT Connected")
 
+def test_relay():
+    print("")
+    print("Testing relay")
+    print("Relay on")
+    relay.on()
+    
+    time.sleep(.5)
+
+    print("Relay off")
+    print("")
+    relay.off()
+    
+
 # https://www.geeksforgeeks.org/clear-screen-python/
 def clear():
 
@@ -36,6 +52,9 @@ if __name__ == '__main__':
     try:
         while True:
             clear()
+            
+            test_relay()
+            
             print("Soil Moisture Sensor")
             soil_moisture = adc.read(soil_sensor_analog_port)
             
