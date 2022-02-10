@@ -35,7 +35,15 @@ def test_relay():
     print("Relay off")
     print("")
     relay.off()
+
+def relay_control(soil_moisture):
+    if soil_moisture > 450:
+        print("Soil moisture is too low, turning relay on.")
+        relay.on()
     
+    else:
+        print("Soil Moisture is okay, turning relay off.")
+        relay.off()
 
 # https://www.geeksforgeeks.org/clear-screen-python/
 def clear():
@@ -53,11 +61,11 @@ if __name__ == '__main__':
         while True:
             clear()
             
-            test_relay()
-            
             print("Soil Moisture Sensor")
             soil_moisture = adc.read(soil_sensor_analog_port)
             
+            relay_control(soil_moisture)
+
             data = {}
             data["soil moisture"] = soil_moisture
 
