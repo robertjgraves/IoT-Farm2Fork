@@ -36,8 +36,8 @@ def test_relay():
     print("")
     relay.off()
 
-def relay_control(soil_moisture):
-    if soil_moisture > 450:
+def relay_control(soil_moisture, set_point = 450):
+    if soil_moisture > set_point:
         print("Soil moisture is too low, turning relay on.")
         relay.on()
     
@@ -78,5 +78,7 @@ if __name__ == '__main__':
             time.sleep(5)
 
     except KeyboardInterrupt:
+        relay.off()
+        
         print("")
         print("Stopped by user")
