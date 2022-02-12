@@ -20,10 +20,12 @@ def handle_telemetry(client, userdata, message):
     payload = json.loads(message.payload.decode())
     print("Message received:", payload)
 
-    command = {'relay on' : payload['soil moisture'] > 450}
-    print("Sending message:", command)
+    if 'soil moisture' in payload:
+        command = {'relay on' : payload['soil moisture'] > 450}
+        print("Sending message:", command)
 
-    client.publish(server_command_topic, json.dumps(command))
+        client.publish(server_command_topic, json.dumps(command))
+    
 
 mqtt_client.subscribe(client_telemetry_topic)
 mqtt_client.on_message = handle_telemetry
