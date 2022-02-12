@@ -9,6 +9,8 @@ id = 'pi-zero-2w'
 client_telemetry_topic = id + '/telemetry/'
 client_name = id + 'soil_moisture_sensor_server'
 
+server_command_topic = id + '/commands/'
+
 mqtt_client = mqtt.Client(client_name)
 mqtt_client.connect(mqtt_server)
 
@@ -17,6 +19,11 @@ mqtt_client.loop_start()
 def handle_telemetry(client, userdata, message):
     payload = json.loads(message.payload.decode())
     print("Message received:", payload)
+
+    command = {'relay_on' : payload['soil moisture'] > 450}
+    print("Sending message:", command)
+
+    client.publish(server_command_topic, json.dumps(command))
 
 mqtt_client.subscribe(client_telemetry_topic)
 mqtt_client.on_message = handle_telemetry
