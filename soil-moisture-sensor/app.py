@@ -17,6 +17,8 @@ id = 'pi-zero-2w'
 client_name = id + 'soil_moisture_sensor_client'
 client_telemetry = id + '/telemetry/'
 
+server_command_topic = id + '/commands/'
+
 mqtt_client = mqtt.Client(client_name)
 
 mqtt_client.connect(mqtt_server)
@@ -45,6 +47,19 @@ def relay_control(soil_moisture, set_point = 450):
         print("Soil Moisture is okay, turning relay off.")
         relay.off()
 
+def handle_command(client, userdata, message):
+    payload = json.loads(message.payload.decode())
+    print("Message received:", payload)
+
+    if payload['relay on']:
+        relay.on()
+    
+    else:
+        relay.off()
+
+mqtt_client.subscribe(server_command_topic)
+mqtt_client.on_message = handle_command
+
 # https://www.geeksforgeeks.org/clear-screen-python/
 def clear():
 
@@ -64,8 +79,6 @@ if __name__ == '__main__':
             print("Soil Moisture Sensor")
             soil_moisture = adc.read(soil_sensor_analog_port)
             
-            relay_control(soil_moisture)
-
             data = {}
             data["soil moisture"] = soil_moisture
 

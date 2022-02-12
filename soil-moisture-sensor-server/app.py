@@ -20,7 +20,7 @@ def handle_telemetry(client, userdata, message):
     payload = json.loads(message.payload.decode())
     print("Message received:", payload)
 
-    command = {'relay_on' : payload['soil moisture'] > 450}
+    command = {'relay on' : payload['soil moisture'] > 450}
     print("Sending message:", command)
 
     client.publish(server_command_topic, json.dumps(command))
