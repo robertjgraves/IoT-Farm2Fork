@@ -21,6 +21,12 @@ def handle_telemetry(client, userdata, message):
 mqtt_client.subscribe(client_telemetry_topic)
 mqtt_client.on_message = handle_telemetry
 
-while True:
-    time.sleep(2)
+if __name__ == '__main__':
+    try:
+        while True:
+            time.sleep(2)
+
+    except KeyboardInterrupt:
+        print("")
+        print("Stopped by user")
 
